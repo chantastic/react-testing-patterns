@@ -12,6 +12,7 @@ Table of Contents
 1. [Mocha vs Jasmine vs Jest](#mocha-vs-jasmine-vs-jest)
 1. [A Mocha Setup](#a-mocha-setup)
 1. [Mock a Doc](#mock-a-doc)
+1. [A Test Boilerplate](#a-test-boilerplate)
 
 Scope
 =====
@@ -175,3 +176,34 @@ Add this flag to your `mocha.opts`:
 ```
 
 Should you want a full fledged DOM, follow [this guide](http://jaketrent.com/post/testing-react-with-jsdom/) by [Jake Trent](http://jaketrent.com/).
+
+A Test Boilerplate
+==================
+
+Here's what a standard test looks like.
+
+```js
+"use strict";
+
+import assert from "assert";
+
+import React, { addons } from "react/addons";
+import AppIcon from "../AppIcon.js.jsx";
+
+let shallowRenderer = React.addons.TestUtils.createRenderer();
+
+describe("MyWidget", () => {
+  shallowRenderer.render(<MyWidget />);
+  let result = shallowRenderer.getRenderOutput();
+
+  it("renders an div tag as its root element", () => {
+    assert.strictEqual(result.type, "div");
+  });
+});
+```
+
+You can required your assertion library in `mocha.opts` to avoid requiring in each test.
+
+```bash
+--require assert
+```
