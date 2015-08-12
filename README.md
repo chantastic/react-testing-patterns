@@ -11,6 +11,7 @@ Table of Contents
 1. [A Dirty-UMD](#a-dirty-umd)
 1. [Mocha vs Jasmine vs Jest](#mocha-vs-jasmine-vs-jest)
 1. [A Mocha Setup](#a-mocha-setup)
+1. [Mock a Doc](#mock-a-doc)
 
 Scope
 =====
@@ -151,3 +152,26 @@ Add a `test/mocha.opts` for shared options:
 ```
 
 *This configuration will be used in both `npm test` and `node_modules/.bin/mocha`*
+
+Mock a Doc
+=============
+
+One of the criteria is testing without a DOM. That sholud be possible using [React shallow rendering]() but [there's a bug](https://github.com/facebook/react/issues/4019).
+
+You can bypass it by mocking `document`.
+
+```javascript
+// ./test/utils/document.js
+
+if (typeof document === 'undefined') {
+  global.document = {};
+}
+```
+
+Add this flag to your `mocha.opts`:
+
+```bash
+--require test/utils/document.js
+```
+
+Should you want a full fledged DOM, follow [this guide](http://jaketrent.com/post/testing-react-with-jsdom/) by [Jake Trent](http://jaketrent.com/).
