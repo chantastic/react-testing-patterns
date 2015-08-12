@@ -9,6 +9,7 @@ Table of Contents
 1. [Scope](#scope)
 1. [Constraints](#constraints)
 1. [A Dirty-UMD](#a-dirty-umd)
+1. [Mocha vs Jasmine vs Jest](#mocha-vs-jasmine-vs-jest)
 
 Scope
 =====
@@ -24,7 +25,7 @@ Our approach has the following constraints.
 * Scripts work in a JS-testing framework
 * Module unit tests should work without a DOM
 * Testing envirnoment should be flexible for app/team-specific needs
-* ES6 syntax support
+* ES2015 syntax support
 
 A Dirty-UMD
 ===========
@@ -58,3 +59,43 @@ Component definitions will need to work in `window` and as a module. This is ugl
 ```
 
 *Feel free to DRY this out however feel right to you.*
+
+Mocha vs Jasmine vs Jest
+========================
+
+Here's how it shook out against our particular constraints.
+
+### TL;DR
+
+In 2015, use Mocha. That might change if these Jest issue get resolved:
+
+* Speedy ES2015 support
+* Jasmine updated to 2.x
+
+### Jest
+
+* Not as flexible as Mocha for app-specific needs
+* Ships with DOM implementation, `jsdom`
+  = locked to unsuportted `3.x` tag
+* Slow. A test suite of only 4 tests and 23 assertions took 10.7 seconds.
+  - https://github.com/facebook/jest/issues/116
+* Locked to Jasmine 1.3
+
+### Jasmine
+
+* No obvious Babel/ES2015 path
+  - https://babeljs.io/docs/setup/ has very obvious setups for the other frameworks.
+
+### Mocha
+
+* Flexible for teams
+  - Very few opinions about anything
+  - Well documented
+  - Simple to configure
+* No default DOM implementation
+* Fast. A test suite of only 4 tests and 23 assertions took 1.2 seconds.
+
+#### Other considerations
+
+Jest has very nice feature for auto-mocking and running tests in parallel. But, for now, it's an order of magnitude slower than Mocha (given our constraints).
+
