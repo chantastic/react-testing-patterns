@@ -13,6 +13,7 @@ Table of Contents
 1. [A Mocha Setup](#a-mocha-setup)
 1. [Mock a Doc](#mock-a-doc)
 1. [A Test Boilerplate](#a-test-boilerplate)
+1. [React Shallow Rendering](#react-shallow-rendering)
 
 Scope
 =====
@@ -206,4 +207,57 @@ You can required your assertion library in `mocha.opts` to avoid requiring in ea
 
 ```bash
 --require assert
+```
+
+React Shallow Rendering
+=======================
+
+Where reasonable, use [shallow-rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering). Shollow rendering does not Require a DOM.
+
+The [ReactTestUtils-test.js](https://github.com/facebook/react/blob/7deab28347eaf206217ffee8e4475a1935b02cb8/src/test/__tests__/ReactTestUtils-test.js#L32-L174) file are the best documentation on how shallow rendering works.
+
+Here are the basics:
+
+### Create a Renderer
+
+```js
+import { addons } from "react/addons";
+
+let shallowRenderer = React.addons.TestUtils.createRenderer();
+```
+
+### Render and get Result
+
+```js
+shallowRenderer.render(<MyWidget />);
+let result = shallowRenderer.getRenderOutput();
+```
+
+### Asserting type
+
+```js
+assert.strictEqual(result.type, "div");
+```
+
+### Assert children
+
+```js
+assert.deepEqual(result.props.children, [
+  <div>hi!</div>,
+  <div>okay, bye.</div>
+]);
+```
+
+### Assert update
+
+```js
+shallowRenderer.render(<InterfacesIcon name="" hoverStyle={{ color: "blue" }} />);
+result = shallowRenderer.getRenderOutput();
+
+assert.deepEqual(result.props.style, {});
+
+result.props.onMouseEnter();
+let mouseEnterResult = shallowRenderer.getRenderOutput();
+
+assert.deepEqual(mouseEnterResult.props.style, { color: "blue" });
 ```
