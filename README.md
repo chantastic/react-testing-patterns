@@ -7,7 +7,8 @@ Table of Contents
 =================
 
 1. [Scope](#scope)
-1. [constraints](#constraints)
+1. [Constraints](#constraints)
+1. [A Dirty-UMD](#a-dirty-umd)
 
 Scope
 =====
@@ -23,3 +24,37 @@ Our approach has the following constraints.
 * Scripts work in a JS-testing framework
 * Module unit tests should work without a DOM
 * Testing envirnoment should be flexible for app/team-specific needs
+* ES6 syntax support
+
+A Dirty-UMD
+===========
+
+Component definitions will need to work in `window` and as a module. This is ugly but it works.
+
+```javascript
+(function (global) {
+  "use strict";
+
+  let React;
+
+  if (typeof module === "object" && module.exports) {
+    React = require("react");
+  } else {
+    React = global.React;
+  }
+
+  class MyWidget extends React.Component {
+    render () {
+      return <div />
+    }
+  }
+
+  if (typeof module === "object" && module.exports) {
+    module.exports = MyWidget;
+  } else {
+    global.MyWidget = MyWidget;
+  }
+})(this);
+```
+
+*Feel free to DRY this out however feel right to you.*
