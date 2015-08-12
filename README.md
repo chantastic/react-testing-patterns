@@ -10,6 +10,7 @@ Table of Contents
 1. [Constraints](#constraints)
 1. [A Dirty-UMD](#a-dirty-umd)
 1. [Mocha vs Jasmine vs Jest](#mocha-vs-jasmine-vs-jest)
+1. [A Mocha Setup](#a-mocha-setup)
 
 Scope
 =====
@@ -99,3 +100,54 @@ In 2015, use Mocha. That might change if these Jest issue get resolved:
 
 Jest has very nice feature for auto-mocking and running tests in parallel. But, for now, it's an order of magnitude slower than Mocha (given our constraints).
 
+A Mocha Setup
+=============
+
+Init `package.json`, if you havent done so:
+
+```bash
+$ npm init
+```
+
+Install Mocha:
+
+```bash
+$ npm install mocha --save-dev
+```
+
+Create the `test/` directory, if one doesn't exist:
+
+```bash
+$ mkdir `test/`
+```
+
+*mocha will automatically run tests matching `./test/*.js`. [ref](http://mochajs.org/#the-test-directory)
+
+Configure the `npm test` command:
+
+```json
+{
+  "scripts": {
+    "test": "mocha"
+  }
+}
+```
+
+Now you can run your local version of `mocha` via the `npm test` command.
+
+Additionally, you can run the local version of `mocha` with flags via the `node_modules` directory:
+
+```bash
+$ node_modules/.bin/mocha --watch --compilers js:babel/register --recursive --reporter nyan
+```
+
+Add a `test/mocha.opts` for shared options:
+
+```bash
+--watch
+--compilers js:babel/register
+--recursive
+--reporter nyan
+```
+
+*This configuration will be used in both `npm test` and `node_modules/.bin/mocha`*
