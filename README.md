@@ -11,6 +11,7 @@ Table of Contents
 1. [A Dirty-UMD](#a-dirty-umd)
 1. [Mocha vs Jasmine vs Jest](#mocha-vs-jasmine-vs-jest)
 1. [A Mocha Setup](#a-mocha-setup)
+1. [Assertion Libraries](#assertion-libraries)
 1. [Mock a Doc](#mock-a-doc)
 1. [A Test Boilerplate](#a-test-boilerplate)
 1. [React Shallow Rendering](#react-shallow-rendering)
@@ -155,6 +156,76 @@ Add a `test/mocha.opts` for shared options:
 
 *This configuration will be used in both `npm test` and `node_modules/.bin/mocha`*
 
+Assertion Libraries
+===================
+
+People like what they like.
+
+My $.02. If you don't have a PM that pretends to read specs, write assertions. Just sayin'.
+
+### node/assert
+
+```bash
+$ # you already have node/assert. lucky you
+```
+
+```js
+import assert from "assert";
+
+assert(result.type, "div");
+```
+
+[API](https://nodejs.org/api/assert.html)
+
+### expect.js
+
+```bash
+$ npm install expect.js --save-dev
+```
+
+```js
+import expect from "expect.js";
+
+expect(result.type).to.be("div");
+```
+
+[API](https://github.com/Automattic/expect.js#api)
+
+### should
+
+```bash
+$ npm install should --save-dev
+```
+
+```js
+import expect from "should";
+
+(result.type).should.be.exactly("div");
+```
+
+[API](http://shouldjs.github.io/)
+
+### chai
+
+```bash
+$ npm install chai --save-dev
+```
+
+Chai has 3 included assertion libraries. Chose your favorite.
+
+```js
+import chai from "chai";
+
+const assert = chai.assert;
+const expect = chai.expect;
+const should = chai.should;
+
+assert.strictEqual(result.type, "div");
+expect(result.type).should.equal("div");
+result.type.should.equal("div");
+```
+
+[API](http://chaijs.com/api/)
 Mock a Doc
 =============
 
