@@ -332,3 +332,5 @@ let mouseEnterResult = shallowRenderer.getRenderOutput();
 
 assert.deepEqual(mouseEnterResult.props.style, { color: "blue" });
 ```
+
+*See [Mock a Doc](#mock-a-doc)
