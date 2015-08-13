@@ -15,6 +15,7 @@ Table of Contents
 1. [Mock a Doc](#mock-a-doc)
 1. [A Test Boilerplate](#a-test-boilerplate)
 1. [React Shallow Rendering](#react-shallow-rendering)
+1. [Watching the File System](#watching-the-file-system)
 
 Scope
 =====
@@ -334,3 +335,49 @@ assert.deepEqual(mouseEnterResult.props.style, { color: "blue" });
 ```
 
 *See [Mock a Doc](#mock-a-doc)
+
+Watching the File System
+========================
+
+`mocha --watch` [is busted](https://github.com/mochajs/mocha/pull/266). I only ran into trouble when attempting to use [sinon.js](http://sinonjs.org/).
+
+If you use `sinon` for stubs, spies, and mocks, you're going to need a dedicated fs watcher. Unfortunately, this is much slower than `mocha --watch` but is has the benefit of, you know, working.
+
+I like [nodemon](https://github.com/remy/nodemon) for filesystem watching.
+
+### Install
+
+```bash
+$ npm install nodemon --save-dev
+```
+
+### Add Script to package.json
+
+```json
+{
+  "scripts": {
+    "test:watch": "node_modules/.bin/nodemon -w app/assets/javascripts/interfaces/components node_modules/.bin/_mocha"
+  }
+}
+```
+
+### nodeman.json
+
+Configuration can be pulled out into `nodemon.json`.
+
+```json
+{
+  "watch": [
+    "app/assets/javascripts/interfaces/components",
+    "test/assets/javascripts/interfaces/components"
+  ]
+}
+```
+
+### Run script
+
+```bash
+$ npm run test:watch
+```
+
+*note: `npm test` is first-class npm command. All other scripts must be run with the `run` prefix.*
