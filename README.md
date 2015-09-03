@@ -284,7 +284,7 @@ You can required your assertion library in `mocha.opts` to avoid requiring in ea
 React Shallow Rendering
 =======================
 
-Where reasonable, use [shallow-rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering). Shollow rendering does not Require a DOM.
+Where reasonable, use [shallow-rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering). Shallow rendering does not Require a DOM.
 
 The [ReactTestUtils-test.js](https://github.com/facebook/react/blob/7deab28347eaf206217ffee8e4475a1935b02cb8/src/test/__tests__/ReactTestUtils-test.js#L32-L174) file are the best documentation on how shallow rendering works.
 
