@@ -361,7 +361,7 @@ $ npm install nodemon --save-dev
 }
 ```
 
-### nodeman.json
+### nodemon.json
 
 Configuration can be pulled out into `nodemon.json`.
 
